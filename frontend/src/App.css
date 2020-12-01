@@ -1,0 +1,65 @@
+* {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  position: "relative";
+  text-align: center;
+}
+
+li {
+  list-style: none;
+}
+
+/* This is styling for global nav-bar */
+.navbar {
+  overflow: hidden;
+  background-color: whitesmoke;
+  font-family: Arial;
+  position: relative;
+  margin-top: 0px;
+}
+
+/* Links inside the navbar */
+.navbar li {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  border-right: 1px solid #bbb;
+  width: 100px;
+}
+
+.navbar li:first-child {
+  border-left: 1px solid #bbb;
+}
+
+.navbar li:hover {
+  background-color: red;
+}
+
+.navbar a:link {
+  text-decoration: none;
+}
+
+.navbar a:hover, a:active {
+  color: white;
+}
+
+/* This is styling for the homepage */
+.kfc-logo {
+  transition: transform 0.7s;
+  margin: 0 auto;
+}
+
+.kfc-logo:hover {
+  -ms-transform: scale(1.2); /* IE 9 */
+  -webkit-transform: scale(1.2); /* Safari 3-8 */
+  transform: scale(1.2); 
+}
+
+.welcome h1 {
+  color: black;
+}
