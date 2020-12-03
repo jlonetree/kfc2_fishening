@@ -11,7 +11,7 @@ class Api::V1::UsersController < ApplicationController
   def get_user
     user = self.current_user
 
-    render json: @user, include: :messages
+    render json: user, include: :messages
   end
 
   def show

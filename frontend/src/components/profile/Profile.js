@@ -51,18 +51,18 @@ class Profile extends Component {
             <div className="profile_page">
                 <div className="profile">
                     <div className="profile_pic">
-                        {!user.img_url ? 
+                        {/* {!user.img_url ?  */}
                         <img
                             src="https://icanmakeshoes.com/wp-content/uploads/2010/09/blank-profile-picture-600x600.png"
                             alt="default_img"
                             className="profile-picture"
                             style={{
-                                width: 150,
-                                height: 150,
-                                borderRadius: 150 / 2,
+                                width: 200,
+                                height: 200,
+                                borderRadius: 200 / 2,
                             }}
                         ></img>
-                        :
+                        {/* 
                         <img
                             src={user.img_url}
                             alt="profile_img"
@@ -73,10 +73,10 @@ class Profile extends Component {
                                 borderRadius: 150 / 2,
                             }}
                         ></img>
-                        }
+                        } */}
                     </div>
                     <div className="name">
-                        <h2>{user?.name}</h2>
+                        <h2 style={{color: "white"}}>{user?.name}</h2>
                     </div>
                     <form className="message-area" onSubmit={handleSubmit}>
                         <div className="message-box">

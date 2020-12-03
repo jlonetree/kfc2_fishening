@@ -81,7 +81,7 @@ export default class Message extends Component {
                 <br />
                     <img
                         src={message.user.img_url}
-                        alt="default_img"
+                        alt="user-pics"
                         className="profile-picture"
                         style={{
                             width: 300,
