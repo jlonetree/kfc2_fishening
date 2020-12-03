@@ -67,6 +67,7 @@ class Edit extends Component {
             email: updatedUser.email,
             name: updatedUser.name,
             password: updatedUser.password,
+            img_url: updatedUser.img_url,
             bio: updatedUser.bio,
             chicken_lover: updatedUser.chicken_lover,
         }))

@@ -73,16 +73,14 @@ export default class Message extends Component {
         }
 
         let ts = new Date();
-        // function dateToString() {
-        //     ts.toDateString()
-        // }
+        
         return (
             <div className="message-feed">
                 <button onClick={() => handleDeleteMessage(message.id)} className='dlt-btn'>X</button>
                 <br />
                 <br />
                     <img
-                        src="https://icanmakeshoes.com/wp-content/uploads/2010/09/blank-profile-picture-600x600.png"
+                        src={message.user.img_url}
                         alt="default_img"
                         className="profile-picture"
                         style={{
@@ -92,8 +90,7 @@ export default class Message extends Component {
                         }}
                     ></img>
                 <br /><br />
-                {message.user}
-                <br /><br />
+                <h3>{message.user.name}</h3>
                 {message.content}
                 <br /> <br />
                 <b><u>Updated On:</u></b> {ts.toDateString(message.updated_at)}

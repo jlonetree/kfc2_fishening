@@ -16,7 +16,7 @@ import {
 
 const urlUsers = `http://localhost:3000/api/v1/users/`
 const urlMessages = `http://localhost:3000/api/v1/messages/`
-const urlChickens = `http://localhost:3000/api/v1/chickens/`
+// const urlChickens = `http://localhost:3000/api/v1/chickens/`
 const url = "http://localhost:3000/api/v1/logout"
 
 class App extends React.Component {
