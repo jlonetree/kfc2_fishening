@@ -7,7 +7,7 @@ class Homepage extends Component {
       <div className="landing-page">
         <div className="welcome">
           <h1>Colonel's Social Circle</h1>
-          <h3>The Finger Lickin' Good Social Network</h3>
+          <h3>The Finger Lickin' Good Secret Social Society</h3>
         </div>
         <br /><br /><br />
         <div className="circle-logo">

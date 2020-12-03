@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       delete '/logout', to: 'auth#destroy'
       get '/logged_in', to: 'application#logged_in?'
       get '/profile', to: 'users#profile'
+      get '/user', to: 'users#get_user'
       resources :messages
       resources :items
       resources :likes

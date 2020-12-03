@@ -12,6 +12,12 @@ class Api::V1::AuthController < ApplicationController
     end
   end
 
+  # Destroy /api/v1/logout
+  def destroy
+    logout!
+    render json: {status: 200, logged_out: true}
+  end
+
   private
 
   def user_login_params

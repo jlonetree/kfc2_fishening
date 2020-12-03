@@ -8,6 +8,12 @@ class Api::V1::UsersController < ApplicationController
     render json: @users, include: :messages
   end
 
+  def get_user
+    user = self.current_user
+
+    render json: @user, include: :messages
+  end
+
   def show
     @user = User.find(params[:id])
 
@@ -29,7 +35,7 @@ class Api::V1::UsersController < ApplicationController
 
     if @user
       @user.update(user_params)
-      render json: { user: @user }, status: :updated
+      render json: { user: @user }, status: :created
     else
       render json: { error: 'failed to create user' }, status: :not_acceptable
     end

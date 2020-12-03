@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 const url = "http://localhost:3000/api/v1/login"
 
@@ -17,7 +17,6 @@ class Login extends Component {
     }
 
     handleChange = (e) => {
-        console.log( e.target.name, e.target.value )
         this.setState({ [e.target.name]: e.target.value })
     }
 
@@ -39,7 +38,6 @@ class Login extends Component {
         })
         .then(res => res.json())
         .then(response => {
-            console.log(response)
             if(response.message){
                 return this.setState({errorMessage: response.message})
             }
@@ -59,18 +57,19 @@ class Login extends Component {
             <div className="login">
                 <form className="login-form" onSubmit={handleLogin}>
                     <div className="inline fields">
-                        <h3>Finger-Lickin' Log-In</h3>
-                        <label for="name">Username: </label>
+                        <h3>Finger-Lickin' Login</h3>
+                        <label htmlFor="name"><p>Username</p></label>
                         <input type="text" id="username" placeholder="username" name="name" onChange={handleChange} />
-                        <br />
-                        <label for="password">Password: </label>
+                        <br /><br />
+                        <label htmlFor="password"><p>Password</p></label>
                         <input type="password" id="password" placeholder="password" name="password" onChange={handleChange} />
-                        <br />
+                        <br /><br />
                         <button type="submit">Log-In</button><br /><br />
                         <a href="/registration">First Time?</a>
                     </div>
                 </form>
-                {this.state.errorMessage !== "" ? <h3>{this.state.errorMessage}</h3> : null}
+                <br />
+                {this.state.errorMessage !== "" ? <h4 className="error">{this.state.errorMessage}</h4> : null}
             </div>
         )
     }

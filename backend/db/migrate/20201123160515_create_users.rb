@@ -6,6 +6,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :email
       t.string :first_name
       t.string :last_name
+      t.string :img_url
       # t.date :birthday
       t.text :bio
       t.boolean :chicken_lover

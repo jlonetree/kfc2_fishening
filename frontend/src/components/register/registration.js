@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 
 const url = "http://localhost:3000/api/v1/users";
@@ -15,6 +15,7 @@ class Registration extends Component {
       name: "",
       password: "",
       bio: "",
+      img_url: "",
       chicken_lover: false,
       total_points: 0,
       created: false
@@ -22,12 +23,10 @@ class Registration extends Component {
   }
 
   handleChange = (e) => {
-    console.log(e.target.name, e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   };
 
   handleClick = (e) => {
-    console.log(`this is working ${this.state.chicken_lover}`);
     this.setState({
       chicken_lover: e.target.value,
     });
@@ -41,6 +40,7 @@ class Registration extends Component {
       email,
       name,
       password,
+      img_url,
       bio,
       chicken_lover,
     } = this.state;
@@ -58,6 +58,7 @@ class Registration extends Component {
         "email": email,
         "name": name,
         "password": password,
+        "img_url": img_url,
         "bio": bio,
         "chicken_lover": chicken_lover,
         "total_points": 0,
@@ -69,6 +70,7 @@ class Registration extends Component {
         if (newUser.status === "created") {
           this.setState({created: true})
         }
+        this.props.history.push('/login')
       });
   };
 
@@ -79,11 +81,11 @@ class Registration extends Component {
   render() {
     const { handleChange, handleSubmit } = this;
     return (
-      <div className="register">
+      <div className="registration">
         <form className="registration-form" onSubmit={handleSubmit}>
           <div className="inline fields">
             <h3>Registration Form</h3>
-            <label for="first_name">First Name: </label>
+            <label htmlFor="first_name"><p>First Name</p></label>
             <input
               type="text"
               id="first_name"
@@ -91,8 +93,8 @@ class Registration extends Component {
               name="first_name"
               onChange={handleChange}
             />
-            <br />
-            <label for="last_name">Last Name: </label>
+            <br /><br />
+            <label htmlFor="last_name"><p>Last Name</p></label>
             <input
               type="text"
               id="Last_name"
@@ -100,8 +102,8 @@ class Registration extends Component {
               name="last_name"
               onChange={handleChange}
             />
-            <br />
-            <label for="email">Email: </label>
+            <br /><br />
+            <label htmlFor="email"><p>Email</p></label>
             <input
               type="text"
               id="email"
@@ -109,8 +111,8 @@ class Registration extends Component {
               name="email"
               onChange={handleChange}
             />
-            <br />
-            <label for="name">Username: </label>
+            <br /><br />
+            <label htmlFor="name"><p>Username</p></label>
             <input
               type="text"
               id="name"
@@ -118,8 +120,8 @@ class Registration extends Component {
               name="name"
               onChange={handleChange}
             />
-            <br />
-            <label for="password">Password: </label>
+            <br /><br />
+            <label htmlFor="password"><p>Password</p></label>
             <input
               type="password"
               id="password"
@@ -127,8 +129,17 @@ class Registration extends Component {
               name="password"
               onChange={handleChange}
             />
-            <br />
-            <label for="bio">Tell Us A Bit About You </label>
+            <br /><br />
+            <label htmlFor="img_url"><p>Image Url</p></label>
+            <input
+              type="text"
+              id="img_url"
+              placeholder="image address"
+              name="img_url"
+              onChange={handleChange}
+            />
+            <br /><br />
+            <label htmlFor="bio"><p>Bio</p></label>
             <TextField
               id="outlined-multiline-static"
               multiline
@@ -142,9 +153,9 @@ class Registration extends Component {
                 fontSize: 7,
               }}
             />
-            <br />
-            <label for="chicken_lover">Are You a Chicken Lover?</label>
-            <br />
+            <br /><br />
+            <label htmlFor="chicken_lover">Are You a Chicken Lover?</label>
+            <br /><br />
             <input
               type="radio"
               value="true"
@@ -166,8 +177,9 @@ class Registration extends Component {
             <button type="submit">
               Register Account
             </button>
-            <h5>If you already have an account</h5>
-            <a href="/login">Click Here</a>
+            <br />
+            <br />
+            <a href="/login">Login</a>
           </div>
         </form>
       </div>

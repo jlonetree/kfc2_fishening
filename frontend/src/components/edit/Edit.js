@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 
 class Edit extends Component {
@@ -11,25 +11,23 @@ class Edit extends Component {
             email: "",
             name: "",
             password: "",
+            img_url: "",
             bio: "",
             chicken_lover: false,
         };
     }
 
     handleChange = (e) => {
-      console.log(e.target.name, e.target.value);
       this.setState({ [e.target.name]: e.target.value });
     };
 
     handleClick = (e) => {
-      console.log(`this is working ${this.state.chicken_lover}`);
       this.setState({
         chicken_lover: e.target.value,
       });
     };
 
     handleSubmit = (e) => {
-        console.log(`This will edit => ${this.props.user.id}`)
         e.preventDefault()
         const {
           first_name,
@@ -37,6 +35,7 @@ class Edit extends Component {
           email,
           name,
           password,
+          img_url,
           bio,
           chicken_lover,
         } = this.state;
@@ -55,6 +54,7 @@ class Edit extends Component {
               "email": email,
               "name": name,
               "password": password,
+              "img_url": img_url,
               "bio": bio,
               "chicken_lover": chicken_lover,
             }})
@@ -73,7 +73,6 @@ class Edit extends Component {
     }
 
     handleDeleteUser = () => {
-        console.log(`this works => ${this.props.user.id}`)
         fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}`, {
             method: 'DELETE',
             headers: {
@@ -81,54 +80,63 @@ class Edit extends Component {
             }
         })
         .then(res => res.json())
-        .then(() => alert("User successfully deleted"))
+        .then(() => {
+          this.props.removeUser(this.props.user)
+          alert("User successfully deleted")
+          this.props.history.push('/login')
+        })
     }
 
     render() {
         const { handleDeleteUser, handleChange, handleSubmit } = this
         const { user } = this.props
         return (
-        <div className="edit-user">
+        <div className="edit">
         <form className="edit-form" onSubmit={handleSubmit}>
           <div className="inline fields">
             <h3>User Edit Form</h3>
-            <label for="first_name">First Name: </label>
+            <label htmlFor="first_name">First Name</label>
+            <br />
             <input
               type="text"
               id="first_name"
-              defaultValue={user.first_name}
+              defaultValue={user?.first_name}
               name="first_name"
               onChange={handleChange}
             />
+            <br /><br />
+            <label htmlFor="last_name">Last Name</label>
             <br />
-            <label for="last_name">Last Name: </label>
             <input
               type="text"
               id="Last_name"
-              defaultValue={user.last_name}
+              defaultValue={user?.last_name}
               name="last_name"
               onChange={handleChange}
             />
+            <br /><br />
+            <label htmlFor="email">Email</label>
             <br />
-            <label for="email">Email: </label>
             <input
               type="text"
               id="email"
-              defaultValue={user.email}
+              defaultValue={user?.email}
               name="email"
               onChange={handleChange}
             />
+            <br /><br />
+            <label htmlFor="name">Username</label>
             <br />
-            <label for="name">Username: </label>
             <input
               type="text"
               id="name"
-              defaultValue={user.name}
+              defaultValue={user?.name}
               name="name"
               onChange={handleChange}
             />
+            <br /><br />
+            <label htmlFor="password">Password</label>
             <br />
-            <label for="password">Password: </label>
             <input
               type="password"
               id="password"
@@ -136,13 +144,23 @@ class Edit extends Component {
               name="password"
               onChange={handleChange}
             />
+            <br /><br />
+            <label htmlFor="img_url"><p>Image Url</p></label>
+            <input
+              type="text"
+              id="img_url"
+              placeholder="image address"
+              name="img_url"
+              onChange={handleChange}
+            />
+            <br /><br />
+            <label htmlFor="bio">Bio</label>
             <br />
-            <label for="bio">Current Bio: </label>
             <TextField
               id="outlined-multiline-static"
               multiline
               rows={4}
-              defaultValue={user.bio}
+              defaultValue={user?.bio}
               variant="outlined"
               name="bio"
               onChange={handleChange}
@@ -151,14 +169,14 @@ class Edit extends Component {
                 fontSize: 7,
               }}
             />
-            <br />
-            <label for="chicken-lover">Chicken Lover Status:</label>
-            <br />
+            <br /><br />
+            <label htmlFor="chicken-lover">Chicken Lover Status</label>
+            <br /><br />
             <input
               type="radio"
               value="true"
               id="yes"
-              name="chicken-lover"
+              name="chicken_lover"
               onChange={handleChange}
             />{" "}
             Yes
@@ -172,10 +190,11 @@ class Edit extends Component {
             No
             <br />
             <br />
-            <button type="submit">Update Profile </button>
+            <button type="submit">Update Profile</button>
           </div>
-            <button className="dlt-user" onClick={() => handleDeleteUser(user.id)}>Delete Profile</button>
+            <br />
         </form>
+            <button className="dlt-user" onClick={() => {handleDeleteUser(user.id)}} >Delete Profile</button>
       </div>
         )
     }

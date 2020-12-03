@@ -18,7 +18,7 @@ class Api::V1::MessagesController < ApplicationController
     @message = Message.create(message_params)
 
     if @message.valid?
-      render json: {message: @message}, status: :created
+      render json: @message
     else
       render json: { error: 'failed to create message' }, status: :not_acceptable
     end

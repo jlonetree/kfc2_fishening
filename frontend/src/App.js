@@ -4,29 +4,42 @@ import Registration from './components/register/registration'
 import Login from './components/login/login'
 import Edit from './components/edit/Edit'
 import Profile from './components/profile/Profile'
+// import Message from './components/message/Message'
 import './App.css'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from "react-router-dom";
 
-const urlUser = `http://localhost:3000/api/v1/users/`
-const urlMessage = `http://localhost:3000/api/v1/messages/`
+const urlUsers = `http://localhost:3000/api/v1/users/`
+const urlMessages = `http://localhost:3000/api/v1/messages/`
+const urlChickens = `http://localhost:3000/api/v1/chickens/`
+const url = "http://localhost:3000/api/v1/logout"
 
 class App extends React.Component {
 
   state = {
     users: [],
     messages: [],
-    currentUser: {}
+    currentUser: null
   }
 
   componentDidMount() {
+    if(localStorage.token){
+      fetch('http://localhost:3000/api/v1/user', {
+        headers: {
+          "Authorization": `Bearer ${localStorage.token}`
+        }
+      })
+      .then(res => res.json())
+      .then(user => this.setState({currentUser: user}))
+    }
     Promise.all([
-      fetch(urlUser),
-      fetch(urlMessage)
+      fetch(urlUsers),
+      fetch(urlMessages)
     ])
       .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
       .then(([users, messages]) => this.setState({
@@ -35,18 +48,44 @@ class App extends React.Component {
       }))
   }
 
+  handleLogout = () => {    
+
+    fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${localStorage.token}`
+        }
+    })
+    .then(res => res.json())
+    .then(response => {
+        if(response.message){
+            return this.setState({errorMessage: response.message})
+        }
+        localStorage.clear()
+        localStorage.removeItem("token")
+        this.setCurrentUser(null)
+        return <Redirect to="/login" />
+    })
+  }
+
   setCurrentUser = user => {
     this.setState({ currentUser: user })
   }
 
   addUser = newUser => {
-    console.log(newUser)
     this.setState({ users: [...this.state.users, newUser] })
   }
 
   addMessage = newMessage => {
-    console.log(newMessage)
     this.setState({ messages: [...this.state.messages, newMessage] })
+  }
+
+  removeMessage = delMessage => {
+    this.setState({ messages: this.state.messages.filter(message => message.id !== delMessage.id) })
+  }
+
+  removeUser = delUser => {
+    this.setState({ users: this.state.users.filter(user => user.id !== delUser.id) })
   }
 
   render() {
@@ -58,21 +97,28 @@ class App extends React.Component {
             <li className="homepage">
               <Link to="/" >Home</Link>
             </li>
-            <li className="login">
+            {this.state.currentUser ? 
+            <li className="logout-link" onClick={this.handleLogout}>
+              <Link to="/login" >Logout</Link>
+            </li> 
+            :
+            <li className="login-link">
               <Link to="/login" >Login</Link>
             </li>
-            <li className="registration">
+            }
+            <li className="registration-link">
               <Link to="/registration" >Registration</Link>
             </li>
-            <li className="edit">
+            <li className="edit-link">
               <Link to="/edit" >Update User</Link>
             </li>
-            <li className="profile">
+            <li className="profile-link">
               <Link to="/profile">Profile</Link>
             </li>
+            <li className="points-bar" style={{color: "black", float: "right", paddingRight: 50}}>
+              <b>Score: {this.state.currentUser ? this.state.currentUser.total_points : 0}</b>
+            </li>
           </ul>
-
-          
           
           <Switch>
             <Route exact path="/">
@@ -85,10 +131,10 @@ class App extends React.Component {
               <Registration addUser={addUser}/>
             </Route>
             <Route exact path="/edit">
-              <Edit user={this.state.currentUser}/>
+              <Edit user={this.state.currentUser} removeUser={this.removeUser} handleLogout={this.handleLogout} />
             </Route>
             <Route exact path="/profile">
-              <Profile user={this.state.currentUser} addMessage={addMessage} messages={this.state.messages}/>
+              <Profile user={this.state.currentUser} addMessage={addMessage} messages={this.state.messages} removeMessage={this.removeMessage} />
             </Route>
           </Switch>
         </div>

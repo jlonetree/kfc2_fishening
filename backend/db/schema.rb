@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 2020_11_23_160643) do
     t.string "email"
     t.string "first_name"
     t.string "last_name"
+    t.string "img_url"
     t.text "bio"
     t.boolean "chicken_lover"
     t.integer "total_points"
